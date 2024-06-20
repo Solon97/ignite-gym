@@ -14,24 +14,24 @@ datasource db {
 }
 
 model User {
-  id            String    @id @default(uuid())
-  name          String
-  email         String    @unique
-  password_hash String
-  created_at    DateTime  @default(now())
-  checkIns      CheckIn[]
+  id           String    @id @default(uuid())
+  name         String
+  email        String    @unique
+  passwordHash String    @map("password_hash")
+  createdAt    DateTime  @default(now()) @map("created_at")
+  checkIns     CheckIn[]
 
   @@map("users")
 }
 
 model CheckIn {
-  id           String    @id @default(uuid())
-  validated_at DateTime? // Conseguimos saber quando foi validado (Existe a data) e quando foi)
-  created_at   DateTime  @default(now())
-  user         User      @relation(fields: [user_id], references: [id])
-  user_id      String
-  gym          Gym       @relation(fields: [gym_id], references: [id])
-  gym_id       String
+  id          String    @id @default(uuid())
+  validatedAt DateTime? @map("validated_at")
+  createdAt   DateTime  @default(now()) @map("created_at")
+  user        User      @relation(fields: [user_id], references: [id])
+  user_id     String
+  gym         Gym       @relation(fields: [gym_id], references: [id])
+  gym_id      String
 
   @@map("check_ins")
 }
@@ -43,7 +43,7 @@ model Gym {
   phone       String?
   latitude    Decimal
   longitude   Decimal
-  created_at  DateTime  @default(now())
+  createdAt   DateTime  @default(now()) @map("created_at")
   checkIns    CheckIn[]
 
   @@map("gyms")
