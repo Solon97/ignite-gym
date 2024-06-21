@@ -1,9 +1,9 @@
 # Gympass Style App
 
 ## Requisitos Funcionais
-- [ ] O usuário deve poder se cadastrar;
-- [ ] O usuário deve poder se autenticar;
-- [ ] O usuário deve poder consultar o seu perfil logado
+- [x] O usuário deve poder se cadastrar;
+- [x] O usuário deve poder se autenticar;
+- [x] O usuário deve poder consultar o seu perfil logado
 - [ ] O usuário deve poder obter o número de check-ins realizados
 - [ ] O usuário deve poder obter o histórico de check-ins
 - [ ] O usuário deve poder buscar academias próximas
