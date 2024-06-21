@@ -3,6 +3,14 @@
         "@rocketseat/eslint-config/node"
     ],
     "rules": {
+        "no-multiple-empty-lines": [
+            "error",
+            { "max": 1, "maxEOF": 0, "maxBOF": 0 }
+        ],
+        "padding-line-between-statements": [
+            "error",
+            { "blankLine": "always", "prev": "import", "next": "export" }
+        ],
         "no-useless-constructor":"off"
     }
 }
