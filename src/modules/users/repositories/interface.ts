@@ -14,7 +14,7 @@ export interface User {
   createdAt: Date
 }
 
-export interface IUserRepository {
+export interface UserRepository {
   findByEmail(email: string): Promise<User | null>
   create(input: CreateUserInput): Promise<User>
 }

@@ -5,15 +5,13 @@ import { CreateUserService } from '../services/create'
 import { UserAlreadyExistsError } from '../services/errors/already-exists'
 
 export async function create(request: FastifyRequest, reply: FastifyReply) {
-  const registerBodySchema = z.object({
+  const createBodySchema = z.object({
     name: z.string(),
     email: z.string().email(),
     password: z.string().min(6),
   })
-  const bodyData = registerBodySchema.parse(request.body)
-
+  const bodyData = createBodySchema.parse(request.body)
   const service = new CreateUserService(new PrismaUsersRepository())
-
   service
     .execute(bodyData)
     .then(() => {
@@ -23,7 +21,6 @@ export async function create(request: FastifyRequest, reply: FastifyReply) {
       if (error instanceof UserAlreadyExistsError) {
         return reply.status(409).send({ error: error.message })
       }
-
       throw error
     })
 }
