@@ -1,6 +1,6 @@
 import { CreateUserInput, UserRepository, User } from './interface'
 
-export class MockUsersRepository implements UserRepository {
+export class InMemoryUsersRepository implements UserRepository {
   private users: User[]
   constructor() {
     this.users = []
