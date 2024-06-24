@@ -1,7 +1,7 @@
 import { Gym, GymRepository } from './interface'
 
 export class InMemoryGymsRepository implements GymRepository {
-  private gyms: Gym[]
+  gyms: Gym[]
 
   constructor(gyms?: Gym[]) {
     this.gyms = gyms ?? []

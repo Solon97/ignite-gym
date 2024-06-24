@@ -3,11 +3,17 @@ import { CheckIn, CheckInRepository } from '@check-ins/repositories/interface'
 import { GymNotFoundError } from '@gyms/errors/not-found'
 import { GymRepository } from '@gyms/repositories/interface'
 import { UserNotFoundError } from '@users/errors/not-found'
-import { UserRepository } from '@users/repositories/interface'
+import { User, UserRepository } from '@users/repositories/interface'
+import { CheckinGeoValidator } from './validations/geo-validator'
 
+interface CheckInServiceCoordinates {
+  latitude: number
+  longitude: number
+}
 interface CheckInServiceInput {
   userId: string
   gymId: string
+  userCoordinates: CheckInServiceCoordinates
 }
 
 interface CheckInServiceOutput {
@@ -24,25 +30,29 @@ export class CheckInService {
   async execute({
     userId,
     gymId,
+    userCoordinates,
   }: CheckInServiceInput): Promise<CheckInServiceOutput> {
     const user = await this.usersRepository.findById(userId)
     if (!user) {
       throw new UserNotFoundError()
     }
-
     const gym = await this.gymsRepository.findById(gymId)
     if (!gym) {
       throw new GymNotFoundError()
     }
 
-    const sameDayCheckIn = await this.checkInsRepository.findByUserInDate({
-      checkInDate: new Date(),
-      userId: user.id,
-    })
+    await this.validateDate(user)
 
-    if (sameDayCheckIn) {
-      throw new SameDayCheckInError()
-    }
+    CheckinGeoValidator.execute(
+      {
+        latitude: userCoordinates.latitude,
+        longitude: userCoordinates.longitude,
+      },
+      {
+        latitude: gym.latitude,
+        longitude: gym.longitude,
+      },
+    )
 
     const checkIn = await this.checkInsRepository.create({
       userId: user.id,
@@ -51,6 +61,17 @@ export class CheckInService {
 
     return {
       checkIn,
+    }
+  }
+
+  private async validateDate(user: User) {
+    const sameDayCheckIn = await this.checkInsRepository.findByUserInDate({
+      checkInDate: new Date(),
+      userId: user.id,
+    })
+
+    if (sameDayCheckIn) {
+      throw new SameDayCheckInError()
     }
   }
 }

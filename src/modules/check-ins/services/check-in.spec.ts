@@ -55,6 +55,10 @@ describe('Check-in Service', () => {
     const { checkIn } = await sut.execute({
       userId: fakeUser.id,
       gymId: fakeGym.id,
+      userCoordinates: {
+        latitude: 0,
+        longitude: 0,
+      },
     })
 
     expect(checkIn.id).toBeTruthy()
@@ -67,6 +71,10 @@ describe('Check-in Service', () => {
       sut.execute({
         userId: fakeUser.id,
         gymId: '123',
+        userCoordinates: {
+          latitude: 0,
+          longitude: 0,
+        },
       }),
     ).rejects.toBeInstanceOf(GymNotFoundError)
   })
@@ -76,6 +84,10 @@ describe('Check-in Service', () => {
       sut.execute({
         userId: '123',
         gymId: fakeGym.id,
+        userCoordinates: {
+          latitude: 0,
+          longitude: 0,
+        },
       }),
     ).rejects.toBeInstanceOf(UserNotFoundError)
   })
@@ -85,6 +97,10 @@ describe('Check-in Service', () => {
     const { checkIn } = await sut.execute({
       userId: fakeUser.id,
       gymId: fakeGym.id,
+      userCoordinates: {
+        latitude: 0,
+        longitude: 0,
+      },
     })
 
     expect(checkIn.id).toBeTruthy()
@@ -93,6 +109,10 @@ describe('Check-in Service', () => {
       sut.execute({
         userId: fakeUser.id,
         gymId: fakeGym.id,
+        userCoordinates: {
+          latitude: 0,
+          longitude: 0,
+        },
       }),
     ).rejects.toBeInstanceOf(SameDayCheckInError)
   })
@@ -102,6 +122,10 @@ describe('Check-in Service', () => {
     const { checkIn } = await sut.execute({
       userId: fakeUser.id,
       gymId: fakeGym.id,
+      userCoordinates: {
+        latitude: 0,
+        longitude: 0,
+      },
     })
 
     expect(checkIn.id).toBeTruthy()
@@ -111,8 +135,32 @@ describe('Check-in Service', () => {
     const { checkIn: newCheckin } = await sut.execute({
       userId: fakeUser.id,
       gymId: fakeGym.id,
+      userCoordinates: {
+        latitude: 0,
+        longitude: 0,
+      },
     })
 
     expect(newCheckin.id).toBeTruthy()
+  })
+
+  it('should not be able to check in on distant gym', async () => {
+    gymsRepository.gyms.push({
+      id: 'gym-02',
+      name: 'Test Gym',
+      latitude: -7.9599677,
+      longitude: -34.8412848,
+    })
+
+    expect(
+      sut.execute({
+        userId: fakeUser.id,
+        gymId: fakeGym.id,
+        userCoordinates: {
+          latitude: -7.6871862,
+          longitude: -34.8351681,
+        },
+      }),
+    ).rejects.toBeInstanceOf(Error)
   })
 })

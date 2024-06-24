@@ -5,7 +5,7 @@ export interface Gym {
   phone?: string
   latitude: number
   longitude: number
-  createdAt: Date
+  createdAt?: Date
 }
 
 export interface GymRepository {
