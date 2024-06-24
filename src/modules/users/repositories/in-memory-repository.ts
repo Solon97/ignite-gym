@@ -2,8 +2,9 @@ import { CreateUserInput, UserRepository, User } from './interface'
 
 export class InMemoryUsersRepository implements UserRepository {
   private users: User[]
-  constructor() {
-    this.users = []
+
+  constructor(users?: User[]) {
+    this.users = users ?? []
   }
 
   async findById(id: string): Promise<User | null> {
