@@ -1,10 +1,10 @@
-import { SameDayCheckInError } from '@check-ins/errors/same-day-check-in'
 import { CheckIn, CheckInRepository } from '@check-ins/repositories/interface'
 import { GymNotFoundError } from '@gyms/errors/not-found'
 import { GymRepository } from '@gyms/repositories/interface'
 import { UserNotFoundError } from '@users/errors/not-found'
 import { User, UserRepository } from '@users/repositories/interface'
 import { CheckinGeoValidator } from './validations/geo-validator'
+import { MaxNumberCheckInsError } from '@check-ins/errors/max-number-check-ins'
 
 interface CheckInServiceCoordinates {
   latitude: number
@@ -71,7 +71,7 @@ export class CheckInService {
     })
 
     if (sameDayCheckIn) {
-      throw new SameDayCheckInError()
+      throw new MaxNumberCheckInsError()
     }
   }
 }

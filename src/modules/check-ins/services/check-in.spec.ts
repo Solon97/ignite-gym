@@ -1,14 +1,14 @@
+import { MaxNumberCheckInsError } from '@check-ins/errors/max-number-check-ins'
+import { GymNotFoundError } from '@gyms/errors/not-found'
 import { InMemoryGymsRepository } from '@gyms/repositories/in-memory-repository'
+import { Gym } from '@gyms/repositories/interface'
+import { UserNotFoundError } from '@users/errors/not-found'
 import { InMemoryUsersRepository } from '@users/repositories/in-memory-repository'
 import { User } from '@users/repositories/interface'
 import { randomUUID } from 'node:crypto'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { InMemoryCheckInsRepository } from '../repositories/in-memory-repository'
 import { CheckInService } from './check-in'
-import { Gym } from '@gyms/repositories/interface'
-import { GymNotFoundError } from '@gyms/errors/not-found'
-import { UserNotFoundError } from '@users/errors/not-found'
-import { SameDayCheckInError } from '@check-ins/errors/same-day-check-in'
 
 const fakeUser: User = {
   id: randomUUID(),
@@ -20,6 +20,8 @@ const fakeUser: User = {
 const fakeGym: Gym = {
   id: randomUUID(),
   name: '',
+  description: null,
+  phone: null,
   latitude: 0,
   longitude: 0,
   createdAt: new Date('2024-06-01'),
@@ -114,7 +116,7 @@ describe('Check-in Service', () => {
           longitude: 0,
         },
       }),
-    ).rejects.toBeInstanceOf(SameDayCheckInError)
+    ).rejects.toBeInstanceOf(MaxNumberCheckInsError)
   })
 
   it('should be able to check in twice in different days', async () => {
@@ -148,8 +150,11 @@ describe('Check-in Service', () => {
     gymsRepository.gyms.push({
       id: 'gym-02',
       name: 'Test Gym',
+      description: null,
+      phone: null,
       latitude: -7.9599677,
       longitude: -34.8412848,
+      createdAt: new Date(),
     })
 
     expect(
