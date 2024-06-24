@@ -1,6 +1,6 @@
 import { hashWithSalt } from '../common/hash'
 import { User, UserRepository } from '../repositories/interface'
-import { UserAlreadyExistsError } from './errors/already-exists'
+import { UserAlreadyExistsError } from '../errors/already-exists'
 
 interface CreateServiceInput {
   name: string

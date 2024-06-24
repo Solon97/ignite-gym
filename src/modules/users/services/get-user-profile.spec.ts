@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, it } from 'vitest'
 import { hashWithSalt } from '../common/hash'
 import { InMemoryUsersRepository } from '../repositories/in-memory-repository'
-import { UserNotFoundError } from './errors/not-found'
+import { UserNotFoundError } from '../errors/not-found'
 import { GetUserProfileService } from './get-user-profile'
 
 let usersRepository: InMemoryUsersRepository

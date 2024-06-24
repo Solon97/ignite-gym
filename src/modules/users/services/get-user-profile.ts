@@ -1,5 +1,5 @@
 import { User, UserRepository } from '../repositories/interface'
-import { UserNotFoundError } from './errors/not-found'
+import { UserNotFoundError } from '../errors/not-found'
 
 interface GetUserProfileServiceInput {
   userId: string

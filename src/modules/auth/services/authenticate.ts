@@ -1,5 +1,5 @@
 import { compare } from 'bcryptjs'
-import { User, UserRepository } from '../repositories/interface'
+import { User, UserRepository } from '@users/repositories/interface'
 import { InvalidCredentialsError } from './errors/invalid-credentials'
 
 interface AuthenticateServiceInput {
