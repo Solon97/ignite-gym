@@ -23,4 +23,5 @@ export interface CheckIn {
 export interface CheckInRepository {
   create(input: CreateCheckInInput): Promise<CheckIn>
   findByUserInDate(input: FindByUserInDateInput): Promise<CheckIn | null>
+  countUserCheckIns(user: User): Promise<number>
 }

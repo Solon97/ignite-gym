@@ -6,7 +6,7 @@
 - [x] O usuário deve poder consultar o seu perfil logado
 - [x] O usuário deve poder realizar check-in em uma academia
 - [x] Deve ser possível cadastrar uma academia
-- [ ] O usuário deve poder obter o número de check-ins realizados
+- [x] O usuário deve poder obter o número de check-ins realizados
 - [ ] O usuário deve poder obter o histórico de check-ins
 - [ ] O usuário deve poder buscar academias próximas
 - [ ] O usuário deve poder buscar academias pelo nome

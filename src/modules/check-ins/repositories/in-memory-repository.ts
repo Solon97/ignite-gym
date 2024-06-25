@@ -5,12 +5,17 @@ import {
   CreateCheckInInput,
   FindByUserInDateInput,
 } from './interface'
+import { User } from '@users/repositories/interface'
 
 export class InMemoryCheckInsRepository implements CheckInRepository {
   private checkIns: CheckIn[]
 
   constructor(checkIns?: CheckIn[]) {
     this.checkIns = checkIns ?? []
+  }
+
+  async countUserCheckIns(user: User): Promise<number> {
+    return this.checkIns.filter((checkIn) => checkIn.user.id === user.id).length
   }
 
   async findByUserInDate({
@@ -49,6 +54,8 @@ export class InMemoryCheckInsRepository implements CheckInRepository {
         latitude: 0,
         longitude: 0,
         createdAt: new Date(),
+        description: null,
+        phone: null,
       },
       createdAt: new Date(),
       validatedAt: input.validatedAt ?? null,
