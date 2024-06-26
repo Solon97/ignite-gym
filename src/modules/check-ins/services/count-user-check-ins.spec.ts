@@ -1,20 +1,17 @@
-import { CheckIn } from '@check-ins/repositories/interface'
-import { Gym } from '@gyms/repositories/interface'
-import { InMemoryUsersRepository } from '@users/repositories/in-memory-repository'
-import { User } from '@users/repositories/interface'
-import { randomUUID } from 'node:crypto'
-import { beforeEach, describe, expect, it } from 'vitest'
-import { InMemoryCheckInsRepository } from '../repositories/in-memory-repository'
-import { CountUserCheckInsService } from './count-user-check-ins'
+import { getFakeUser } from '@/test/mocks/fake-entities'
+import { CheckInRepository } from '@check-ins/repositories/interface'
 import { UserNotFoundError } from '@users/errors/not-found'
+import { User, UserRepository } from '@users/repositories/interface'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
+import { CountUserCheckInsService } from './count-user-check-ins'
 
 const fakeUserId = 'user-01'
 const totalCheckIns = 5
 let sut: CountUserCheckInsService
 
-describe('Check-in Service', () => {
+describe('Count User Check-in Service', () => {
   beforeEach(() => {
-    sut = NewCountUserCheckInsService()
+    sut = NewSut()
   })
 
   it('should be able to count user check ins', async () => {
@@ -34,37 +31,25 @@ describe('Check-in Service', () => {
   })
 })
 
-function NewCountUserCheckInsService(): CountUserCheckInsService {
-  const fakeUser: User = {
-    id: fakeUserId,
-    name: '',
-    email: '',
-    passwordHash: '',
-    createdAt: new Date('2024-06-01'),
+function NewSut(): CountUserCheckInsService {
+  const usersRepository: UserRepository = {
+    create: vi.fn(),
+    findByEmail: vi.fn(),
+    findById: vi.fn(
+      async (id: string): Promise<User | null> =>
+        id === fakeUserId ? getFakeUser(fakeUserId) : null,
+    ),
   }
 
-  const fakeGym: Gym = {
-    id: randomUUID(),
-    name: '',
-    description: null,
-    phone: null,
-    latitude: 0,
-    longitude: 0,
-    createdAt: new Date('2024-06-01'),
+  const checkInsRepository: CheckInRepository = {
+    create: vi.fn(),
+    countCheckInsByUserId: vi.fn(
+      async (userId: string): Promise<number> =>
+        userId === fakeUserId ? totalCheckIns : 0,
+    ),
+    findByUserInDate: vi.fn(),
+    findManyByUserId: vi.fn(),
   }
-
-  const fakeCheckIns: CheckIn[] = Array.from({ length: totalCheckIns }, () => ({
-    id: randomUUID(),
-    validatedAt: null,
-    user: fakeUser,
-    gym: fakeGym,
-    createdAt: new Date(),
-  }))
-
-  const fakeUsers: User[] = [fakeUser]
-
-  const checkInsRepository = new InMemoryCheckInsRepository(fakeCheckIns)
-  const usersRepository = new InMemoryUsersRepository(fakeUsers)
 
   return new CountUserCheckInsService(checkInsRepository, usersRepository)
 }

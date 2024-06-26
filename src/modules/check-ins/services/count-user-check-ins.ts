@@ -24,7 +24,9 @@ export class CountUserCheckInsService {
       throw new UserNotFoundError()
     }
 
-    const checkIns = await this.checkInsRepository.countUserCheckIns(user)
+    const checkIns = await this.checkInsRepository.countCheckInsByUserId(userId)
+
+    console.log(checkIns)
     return {
       checkIns,
     }

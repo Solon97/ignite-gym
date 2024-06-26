@@ -4,7 +4,7 @@ import { CheckinGeoValidator } from './geo-validator'
 import { DistantGymCheckInError } from '@check-ins/errors/distant-gym-check-in'
 
 describe('Check in Geo Validator', () => {
-  it('should be no error when passing distances less than 100 meters', () => {
+  it('should be able to check in to a gym with a distance less than the maximum', () => {
     const coordinates: Coordinates[] = [
       {
         latitude: -7.9891696,
@@ -19,7 +19,7 @@ describe('Check in Geo Validator', () => {
     CheckinGeoValidator.execute(coordinates[0], coordinates[1])
   })
 
-  it('should be throws error when passing distances greater than maximum distance', () => {
+  it('should not be able to check in to a gym that is greater than the maximum distance', () => {
     const coordinates: Coordinates[] = [
       {
         latitude: -7.9599677,
