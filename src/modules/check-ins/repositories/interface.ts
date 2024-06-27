@@ -23,6 +23,6 @@ export interface CheckIn {
 export interface CheckInRepository {
   create(input: CreateCheckInInput): Promise<CheckIn>
   findByUserInDate(input: FindByUserInDateInput): Promise<CheckIn | null>
-  findManyByUserId(userId: string): Promise<CheckIn[]>
+  findManyByUserId(userId: string, page: number): Promise<CheckIn[]>
   countCheckInsByUserId(userId: string): Promise<number>
 }

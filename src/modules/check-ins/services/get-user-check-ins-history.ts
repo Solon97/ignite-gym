@@ -4,6 +4,7 @@ import { UserRepository } from '@users/repositories/interface'
 
 interface GetUserCheckInsHistoryServiceInput {
   userId: string
+  page: number
 }
 
 interface GetUserCheckInsHistoryServiceOutput {
@@ -18,13 +19,17 @@ export class GetUserCheckInsHistoryService {
 
   async execute({
     userId,
+    page,
   }: GetUserCheckInsHistoryServiceInput): Promise<GetUserCheckInsHistoryServiceOutput> {
     const user = await this.usersRepository.findById(userId)
     if (!user) {
       throw new UserNotFoundError()
     }
 
-    const checkIns = await this.checkInsRepository.findManyByUserId(userId)
+    const checkIns = await this.checkInsRepository.findManyByUserId(
+      userId,
+      page,
+    )
     return {
       checkIns,
     }
