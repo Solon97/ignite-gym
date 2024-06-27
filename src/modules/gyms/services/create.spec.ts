@@ -1,13 +1,39 @@
-import { beforeEach, describe, expect, it } from 'vitest'
-import { InMemoryGymsRepository } from '../repositories/in-memory-repository'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { CreateGymService } from './create'
+import {
+  CreateGymInput,
+  Gym,
+  GymRepository,
+} from '@gyms/repositories/interface'
 
-let gymsRepository: InMemoryGymsRepository
+let gymsRepository: GymRepository
 let sut: CreateGymService
 
-describe('Create User Service', () => {
+describe('Create Gym Service', () => {
   beforeEach(() => {
-    gymsRepository = new InMemoryGymsRepository()
+    gymsRepository = {
+      create: vi.fn(
+        async ({
+          name,
+          description,
+          phone,
+          latitude,
+          longitude,
+        }: CreateGymInput): Promise<Gym> => {
+          return {
+            id: 'gym-01',
+            name,
+            description: description ?? null,
+            phone: phone ?? null,
+            latitude,
+            longitude,
+            createdAt: new Date(),
+          }
+        },
+      ),
+      findById: vi.fn(),
+      findMany: vi.fn(),
+    }
     sut = new CreateGymService(gymsRepository)
   })
 

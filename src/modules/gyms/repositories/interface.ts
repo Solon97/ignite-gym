@@ -1,4 +1,4 @@
-export interface GymCreateInput {
+export interface CreateGymInput {
   name: string
   description?: string | null
   phone?: string | null
@@ -18,5 +18,6 @@ export interface Gym {
 
 export interface GymRepository {
   findById(id: string): Promise<Gym | null>
-  create(data: GymCreateInput): Promise<Gym>
+  findMany(query: string, page: number): Promise<Gym[]>
+  create(data: CreateGymInput): Promise<Gym>
 }

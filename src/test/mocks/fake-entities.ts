@@ -54,9 +54,20 @@ export const getFakeCheckIns = ({
   gym: Gym
 }): CheckIn[] =>
   Array.from({ length }, (_, i) => ({
-    id: `checkin-${i}`,
+    id: `checkin-${++i}`,
     validatedAt: null,
     user,
     gym,
+    createdAt: new Date('2024-06-01'),
+  }))
+
+export const getFakeGyms = (length: number): Gym[] =>
+  Array.from({ length }, (_, i) => ({
+    id: `gym-${++i}`,
+    name: `Gym ${i}`,
+    description: null,
+    latitude: 0,
+    longitude: 0,
+    phone: null,
     createdAt: new Date('2024-06-01'),
   }))
