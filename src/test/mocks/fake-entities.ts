@@ -32,16 +32,18 @@ export const getFakeCheckIn = ({
   id,
   userId,
   gymId,
+  date,
 }: {
   id?: string
   userId?: string
   gymId?: string
+  date?: Date
 }): CheckIn => ({
   id: id ?? 'test-check-in',
   validatedAt: null,
   user: getFakeUser(userId),
   gym: getFakeGym({ id: gymId }),
-  createdAt: new Date(),
+  createdAt: date ?? new Date(),
 })
 
 export const getFakeCheckIns = ({

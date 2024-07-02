@@ -9,15 +9,15 @@
 - [x] O usuário deve poder obter o número de check-ins realizados
 - [x] O usuário deve poder obter o histórico de check-ins
 - [x] O usuário deve poder buscar academias pelo nome
-- [ ] O usuário deve poder buscar academias próximas
-- [ ] Deve ser possível validar o check-in de um usuário
+- [x] O usuário deve poder buscar academias próximas
+- [x] Deve ser possível validar o check-in de um usuário
 
 ## Regras de Negócio
 
 - [x] O email do usuário deve ser único
 - [x] O usuário não pode fazer 2 check-ins no mesmo dia
 - [x] O usuário não pode fazer check-in se não estiver perto (100m) da academia
-- [ ] O check-in só pode ser validado até 20 minutos após criado
+- [x] O check-in só pode ser validado até 20 minutos após criado
 - [ ] O check-in só pode ser validado por adms
 - [ ] A academia só pode ser cadastrada por adms
 
