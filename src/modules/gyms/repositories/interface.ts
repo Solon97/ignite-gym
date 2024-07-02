@@ -1,3 +1,5 @@
+import { Gym } from '@prisma/client'
+
 export interface FindManyNearbyInput {
   latitude: number
   longitude: number
@@ -10,16 +12,6 @@ export interface CreateGymInput {
   phone?: string | null
   latitude: number
   longitude: number
-}
-
-export interface Gym {
-  id: string
-  name: string
-  description: string | null
-  phone: string | null
-  latitude: number
-  longitude: number
-  createdAt: Date
 }
 
 export interface GymRepository {

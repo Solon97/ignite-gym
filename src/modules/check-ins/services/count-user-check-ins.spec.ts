@@ -1,9 +1,10 @@
 import { getFakeUser } from '@/test/mocks/fake-entities'
 import { CheckInRepository } from '@check-ins/repositories/interface'
 import { UserNotFoundError } from '@users/errors/not-found'
-import { User, UserRepository } from '@users/repositories/interface'
+import { UserRepository } from '@users/repositories/interface'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { CountUserCheckInsService } from './count-user-check-ins'
+import { User } from '@prisma/client'
 
 const fakeUserId = 'user-01'
 const totalCheckIns = 5
@@ -49,6 +50,8 @@ function NewSut(): CountUserCheckInsService {
     ),
     findByUserInDate: vi.fn(),
     findManyByUserId: vi.fn(),
+    findById: vi.fn(),
+    save: vi.fn(),
   }
 
   return new CountUserCheckInsService(checkInsRepository, usersRepository)

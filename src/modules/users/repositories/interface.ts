@@ -1,15 +1,9 @@
+import { User } from '@prisma/client'
+
 export interface CreateUserInput {
   name: string
   email: string
   passwordHash: string
-}
-
-export interface User {
-  id: string
-  name: string
-  email: string
-  passwordHash: string
-  createdAt: Date
 }
 
 export interface UserRepository {

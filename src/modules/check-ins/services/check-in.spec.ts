@@ -6,17 +6,17 @@ import {
 import { DistantGymCheckInError } from '@check-ins/errors/distant-gym-check-in'
 import { MaxNumberCheckInsError } from '@check-ins/errors/max-number-check-ins'
 import {
-  CheckIn,
   CheckInRepository,
   CreateCheckInInput,
   FindByUserInDateInput,
 } from '@check-ins/repositories/interface'
 import { GymNotFoundError } from '@gyms/errors/not-found'
-import { Gym } from '@gyms/repositories/interface'
+import { CheckIn, Gym, User } from '@prisma/client'
 import { UserNotFoundError } from '@users/errors/not-found'
-import { User } from '@users/repositories/interface'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { CheckInService } from './check-in'
+import { GymRepository } from '@gyms/repositories/interface'
+import { UserRepository } from '@users/repositories/interface'
 
 const validUserId = 'test-user'
 const validGymId = 'test-gym'
@@ -40,8 +40,8 @@ describe('Check-in Service', () => {
     })
 
     expect(checkIn.id).toBeTruthy()
-    expect(checkIn.gym.id).toBe(validGymId)
-    expect(checkIn.user.id).toBe(validUserId)
+    expect(checkIn.gym_id).toBe(validGymId)
+    expect(checkIn.user_id).toBe(validUserId)
   })
 
   it('should not be able to check in with invalid gym', async () => {
@@ -111,7 +111,7 @@ describe('Check-in Service', () => {
 })
 
 function newSut(checkInsRepository?: CheckInRepository): CheckInService {
-  const usersRepository = {
+  const usersRepository: UserRepository = {
     create: vi.fn(),
     findByEmail: vi.fn(),
     findById: vi.fn(
@@ -120,12 +120,14 @@ function newSut(checkInsRepository?: CheckInRepository): CheckInService {
     ),
   }
 
-  const gymsRepository = {
+  const gymsRepository: GymRepository = {
     create: vi.fn(),
     findById: vi.fn(
       async (id: string): Promise<Gym | null> =>
         id === validGymId ? getFakeGym({ id }) : null,
     ),
+    findMany: vi.fn(),
+    findManyNearby: vi.fn(),
   }
 
   sutRepository = checkInsRepository ?? {
@@ -139,6 +141,8 @@ function newSut(checkInsRepository?: CheckInRepository): CheckInService {
     countCheckInsByUserId: vi.fn(),
     findByUserInDate: vi.fn(),
     findManyByUserId: vi.fn(),
+    findById: vi.fn(),
+    save: vi.fn(),
   }
 
   return new CheckInService(sutRepository, usersRepository, gymsRepository)

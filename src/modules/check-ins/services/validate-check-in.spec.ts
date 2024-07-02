@@ -1,14 +1,14 @@
 import { getFakeCheckIn, getFakeUser } from '@/test/mocks/fake-entities'
 import { CheckInNotFoundError } from '@check-ins/errors/not-found'
-import { CheckIn, CheckInRepository } from '@check-ins/repositories/interface'
+import { CheckInRepository } from '@check-ins/repositories/interface'
 import { UserNotFoundError } from '@users/errors/not-found'
-import { User } from '@users/repositories/interface'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import {
   MAX_MINUTES_VALIDATE_CHECK_IN,
   ValidateCheckInService,
 } from './validate-check-in'
 import { LateCheckInError } from '@check-ins/errors/late-check-in'
+import { CheckIn, User } from '@prisma/client'
 
 const validUserId = 'test-user'
 const validCheckInId = 'test-checkIn'
@@ -34,7 +34,7 @@ describe('Validate Check-in Service', () => {
     })
 
     expect(checkIn.id).toBe(validCheckInId)
-    expect(checkIn.user.id).toBe(validUserId)
+    expect(checkIn.user_id).toBe(validUserId)
     expect(checkIn.validatedAt).toBeTruthy()
   })
 
@@ -71,7 +71,7 @@ describe('Validate Check-in Service', () => {
     vi.setSystemTime(datePlusFiveMinutes)
 
     expect(checkIn.id).toBe(validCheckInId)
-    expect(checkIn.user.id).toBe(validUserId)
+    expect(checkIn.user_id).toBe(validUserId)
     expect(checkIn.validatedAt).toBeTruthy()
   })
 

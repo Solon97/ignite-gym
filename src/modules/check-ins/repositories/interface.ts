@@ -1,5 +1,4 @@
-import { Gym } from '@gyms/repositories/interface'
-import { User } from '@users/repositories/interface'
+import { CheckIn } from '@prisma/client'
 
 export interface CreateCheckInInput {
   userId: string
@@ -10,14 +9,6 @@ export interface CreateCheckInInput {
 export interface FindByUserInDateInput {
   userId: string
   checkInDate: Date
-}
-
-export interface CheckIn {
-  id: string
-  validatedAt: Date | null
-  user: User
-  gym: Gym
-  createdAt: Date
 }
 
 export interface CheckInRepository {

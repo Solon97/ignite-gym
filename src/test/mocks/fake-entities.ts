@@ -1,6 +1,5 @@
-import { CheckIn } from '@check-ins/repositories/interface'
-import { Gym } from '@gyms/repositories/interface'
-import { User } from '@users/repositories/interface'
+import { CheckIn, Gym, Prisma, User } from '@prisma/client'
+import { randomUUID } from 'crypto'
 
 export const getFakeUser = (id?: string): User => ({
   id: id ?? 'test-user',
@@ -23,8 +22,8 @@ export const getFakeGym = ({
   name: '',
   description: null,
   phone: null,
-  latitude: latitude ?? 0,
-  longitude: longitude ?? 0,
+  latitude: latitude ? new Prisma.Decimal(latitude) : new Prisma.Decimal(0),
+  longitude: longitude ? new Prisma.Decimal(longitude) : new Prisma.Decimal(0),
   createdAt: new Date('2024-06-01'),
 })
 
@@ -41,25 +40,25 @@ export const getFakeCheckIn = ({
 }): CheckIn => ({
   id: id ?? 'test-check-in',
   validatedAt: null,
-  user: getFakeUser(userId),
-  gym: getFakeGym({ id: gymId }),
+  user_id: userId ?? 'test-user',
+  gym_id: gymId ?? 'test-gym',
   createdAt: date ?? new Date(),
 })
 
 export const getFakeCheckIns = ({
-  gym,
+  gymId,
   length,
-  user,
+  userId,
 }: {
   length: number
-  user: User
-  gym: Gym
+  userId: string
+  gymId: string
 }): CheckIn[] =>
   Array.from({ length }, (_, i) => ({
     id: `checkin-${++i}`,
     validatedAt: null,
-    user,
-    gym,
+    user_id: userId ?? randomUUID(),
+    gym_id: gymId ?? randomUUID(),
     createdAt: new Date('2024-06-01'),
   }))
 
@@ -68,8 +67,8 @@ export const getFakeGyms = (length: number): Gym[] =>
     id: `gym-${++i}`,
     name: `Gym ${i}`,
     description: null,
-    latitude: 0,
-    longitude: 0,
+    latitude: new Prisma.Decimal(0),
+    longitude: new Prisma.Decimal(0),
     phone: null,
     createdAt: new Date('2024-06-01'),
   }))

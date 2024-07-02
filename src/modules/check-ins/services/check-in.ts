@@ -1,10 +1,11 @@
-import { CheckIn, CheckInRepository } from '@check-ins/repositories/interface'
+import { CheckInRepository } from '@check-ins/repositories/interface'
 import { GymNotFoundError } from '@gyms/errors/not-found'
 import { GymRepository } from '@gyms/repositories/interface'
 import { UserNotFoundError } from '@users/errors/not-found'
-import { User, UserRepository } from '@users/repositories/interface'
+import { UserRepository } from '@users/repositories/interface'
 import { CheckinGeoValidator } from './validations/geo-validator'
 import { MaxNumberCheckInsError } from '@check-ins/errors/max-number-check-ins'
+import { CheckIn, User } from '@prisma/client'
 
 interface CheckInServiceCoordinates {
   latitude: number
@@ -49,8 +50,8 @@ export class CheckInService {
         longitude: userCoordinates.longitude,
       },
       {
-        latitude: gym.latitude,
-        longitude: gym.longitude,
+        latitude: gym.latitude.toNumber(),
+        longitude: gym.longitude.toNumber(),
       },
     )
 

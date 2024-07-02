@@ -43,7 +43,6 @@ export class ValidateCheckInService {
       'minute',
     )
 
-    console.log(dateDiff)
     if (dateDiff > MAX_MINUTES_VALIDATE_CHECK_IN) {
       throw new LateCheckInError()
     }

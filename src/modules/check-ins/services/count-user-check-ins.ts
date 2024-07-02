@@ -26,7 +26,6 @@ export class CountUserCheckInsService {
 
     const checkIns = await this.checkInsRepository.countCheckInsByUserId(userId)
 
-    console.log(checkIns)
     return {
       checkIns,
     }

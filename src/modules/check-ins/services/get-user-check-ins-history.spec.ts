@@ -1,12 +1,10 @@
 import { env } from '@/env'
-import {
-  getFakeCheckIns,
-  getFakeGym,
-  getFakeUser,
-} from '@/test/mocks/fake-entities'
-import { CheckIn, CheckInRepository } from '@check-ins/repositories/interface'
+import { getFakeCheckIns, getFakeUser } from '@/test/mocks/fake-entities'
+import { CheckInRepository } from '@check-ins/repositories/interface'
+import { CheckIn, User } from '@prisma/client'
 import { UserNotFoundError } from '@users/errors/not-found'
-import { User, UserRepository } from '@users/repositories/interface'
+import { UserRepository } from '@users/repositories/interface'
+import { randomUUID } from 'crypto'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { GetUserCheckInsHistoryService } from './get-user-check-ins-history'
 
@@ -29,15 +27,15 @@ describe('Get User Check-ins History Service', () => {
     expect(checkIns.checkIns).toEqual([
       expect.objectContaining({
         id: 'checkin-1',
-        user: expect.objectContaining({ id: fakeUserId }),
+        user_id: fakeUserId,
       }),
       expect.objectContaining({
         id: 'checkin-2',
-        user: expect.objectContaining({ id: fakeUserId }),
+        user_id: fakeUserId,
       }),
       expect.objectContaining({
         id: 'checkin-3',
-        user: expect.objectContaining({ id: fakeUserId }),
+        user_id: fakeUserId,
       }),
     ])
   })
@@ -64,11 +62,11 @@ describe('Get User Check-ins History Service', () => {
     expect(checkIns.checkIns).toEqual([
       expect.objectContaining({
         id: `checkin-${checkInsLength - 1}`,
-        user: expect.objectContaining({ id: fakeUserId }),
+        user_id: fakeUserId,
       }),
       expect.objectContaining({
         id: `checkin-${checkInsLength}`,
-        user: expect.objectContaining({ id: fakeUserId }),
+        user_id: fakeUserId,
       }),
     ])
   })
@@ -96,8 +94,8 @@ function NewGetUserCheckInsHistoryService(
       }
 
       const checkIns = getFakeCheckIns({
-        gym: getFakeGym({}),
-        user: getFakeUser(fakeUserId),
+        gymId: randomUUID(),
+        userId: fakeUserId,
         length: checkInsLength,
       })
 
@@ -106,6 +104,8 @@ function NewGetUserCheckInsHistoryService(
         page * env.DEFAULT_PER_PAGE,
       )
     }),
+    findById: vi.fn(),
+    save: vi.fn(),
   }
 
   return new GetUserCheckInsHistoryService(checkInsRepository, usersRepository)
