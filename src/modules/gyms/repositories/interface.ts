@@ -1,3 +1,9 @@
+export interface FindManyNearbyInput {
+  latitude: number
+  longitude: number
+  page: number
+}
+
 export interface CreateGymInput {
   name: string
   description?: string | null
@@ -20,4 +26,5 @@ export interface GymRepository {
   findById(id: string): Promise<Gym | null>
   findMany(query: string, page: number): Promise<Gym[]>
   create(data: CreateGymInput): Promise<Gym>
+  findManyNearby(input: FindManyNearbyInput): Promise<Gym[]>
 }
