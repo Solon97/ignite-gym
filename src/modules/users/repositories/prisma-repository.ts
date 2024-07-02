@@ -1,10 +1,21 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { prisma } from '@/lib/prisma'
-import { CreateUserInput, UserRepository, User } from './interface'
+import { User } from '@prisma/client'
+import { CreateUserInput, UserRepository } from './interface'
 
 export class PrismaUsersRepository implements UserRepository {
-  findById(id: string): Promise<User | null> {
-    throw new Error('Method not implemented.')
+  async findById(id: string): Promise<User | null> {
+    const user = await prisma.user.findUnique({
+      where: {
+        id,
+      },
+    })
+
+    if (!user) {
+      return null
+    }
+
+    return user
   }
 
   async create(data: CreateUserInput): Promise<User> {
