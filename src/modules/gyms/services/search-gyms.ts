@@ -1,4 +1,5 @@
-import { Gym, GymRepository } from '@gyms/repositories/interface'
+import { GymRepository } from '@gyms/repositories/interface'
+import { Gym } from '@prisma/client'
 
 interface SearchGymsServiceInput {
   query: string
