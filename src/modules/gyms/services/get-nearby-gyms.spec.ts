@@ -1,5 +1,5 @@
 import { getFakeGyms } from '@/test/mocks/fake-entities'
-import { Gym, GymRepository } from '@gyms/repositories/interface'
+import { GymRepository } from '@gyms/repositories/interface'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { GetNearbyGymsService } from './get-nearby-gyms'
 
@@ -38,7 +38,7 @@ function NewGetNearbyGymsService(gymsLength: number): GetNearbyGymsService {
     create: vi.fn(),
     findById: vi.fn(),
     findMany: vi.fn(),
-    findManyNearby: vi.fn(async (): Promise<Gym[]> => {
+    findManyNearby: vi.fn(async () => {
       return getFakeGyms(gymsLength)
     }),
   }

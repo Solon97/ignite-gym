@@ -1,4 +1,4 @@
-import { env } from '@/env'
+import { appEnv } from '@/env'
 import { getFakeCheckIns, getFakeUser } from '@/test/mocks/fake-entities'
 import { CheckInRepository } from '@check-ins/repositories/interface'
 import { CheckIn, User } from '@prisma/client'
@@ -50,7 +50,7 @@ describe('Get User Check-ins History Service', () => {
   })
 
   it('should be able to get paginated check-in history', async () => {
-    const checkInsLength = env.DEFAULT_PER_PAGE + 2
+    const checkInsLength = appEnv.DEFAULT_PER_PAGE + 2
     sut = NewGetUserCheckInsHistoryService(checkInsLength)
 
     const checkIns = await sut.execute({
@@ -100,8 +100,8 @@ function NewGetUserCheckInsHistoryService(
       })
 
       return checkIns.slice(
-        (page - 1) * env.DEFAULT_PER_PAGE,
-        page * env.DEFAULT_PER_PAGE,
+        (page - 1) * appEnv.DEFAULT_PER_PAGE,
+        page * appEnv.DEFAULT_PER_PAGE,
       )
     }),
     findById: vi.fn(),

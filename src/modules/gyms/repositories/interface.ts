@@ -3,6 +3,7 @@ import { Gym } from '@prisma/client'
 export interface FindManyNearbyInput {
   latitude: number
   longitude: number
+  distanceInMeters: number
   page: number
 }
 

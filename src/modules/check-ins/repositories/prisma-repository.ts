@@ -6,24 +6,16 @@ import {
   FindByUserInDateInput,
 } from './interface'
 import dayjs from 'dayjs'
-import { env } from '@/env'
+import { appEnv } from '@/env'
 
 export class PrismaCheckInsRepository implements CheckInRepository {
-  async create({
-    gymId,
-    userId,
-    validatedAt,
-  }: CreateCheckInInput): Promise<CheckIn> {
+  async create(data: CreateCheckInInput) {
     return prisma.checkIn.create({
-      data: {
-        gymId,
-        userId,
-        validatedAt,
-      },
+      data,
     })
   }
 
-  save(input: CheckIn): Promise<CheckIn> {
+  save(input: CheckIn) {
     return prisma.checkIn.update({
       data: input,
       where: {
@@ -32,8 +24,8 @@ export class PrismaCheckInsRepository implements CheckInRepository {
     })
   }
 
-  async findById(checkInId: string, userId: string): Promise<CheckIn | null> {
-    const checkIn = await prisma.checkIn.findFirst({
+  async findById(checkInId: string, userId: string) {
+    const checkIn = await prisma.checkIn.findUnique({
       where: {
         id: checkInId,
         userId,
@@ -51,10 +43,7 @@ export class PrismaCheckInsRepository implements CheckInRepository {
     return checkIn
   }
 
-  findByUserInDate({
-    userId,
-    checkInDate,
-  }: FindByUserInDateInput): Promise<CheckIn | null> {
+  findByUserInDate({ userId, checkInDate }: FindByUserInDateInput) {
     const startDate: Date = dayjs(checkInDate).startOf('day').toDate()
     const endDate = dayjs(checkInDate).endOf('day').toDate()
     return prisma.checkIn.findFirst({
@@ -68,17 +57,17 @@ export class PrismaCheckInsRepository implements CheckInRepository {
     })
   }
 
-  findManyByUserId(userId: string, page: number): Promise<CheckIn[]> {
+  findManyByUserId(userId: string, page: number) {
     return prisma.checkIn.findMany({
       where: {
         userId,
       },
-      skip: page * env.DEFAULT_PER_PAGE,
-      take: env.DEFAULT_PER_PAGE,
+      skip: page * appEnv.DEFAULT_PER_PAGE,
+      take: appEnv.DEFAULT_PER_PAGE,
     })
   }
 
-  countCheckInsByUserId(userId: string): Promise<number> {
+  countCheckInsByUserId(userId: string) {
     return prisma.checkIn.count({
       where: {
         userId,

@@ -25,3 +25,18 @@ export function getDistanceBetweenCoordinates(
 
   return distance
 }
+
+export function getDegreesDeltaByDistanceMeters(
+  distanceInMeters: number,
+  latitude: number,
+): { deltaLatitude: number; deltaLongitude: number } {
+  // 1 degree of latitude is approximately 111.32 km
+  const metersPerDegreeLatitude = 111320
+  const deltaLatitude = distanceInMeters / metersPerDegreeLatitude
+  // 1 degree of longitude varies with latitude
+  const deltaLongitude =
+    distanceInMeters /
+    (metersPerDegreeLatitude * Math.cos(latitude * (Math.PI / 180)))
+
+  return { deltaLatitude, deltaLongitude }
+}

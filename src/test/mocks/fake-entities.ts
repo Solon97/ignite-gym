@@ -40,8 +40,8 @@ export const getFakeCheckIn = ({
 }): CheckIn => ({
   id: id ?? 'test-check-in',
   validatedAt: null,
-  user_id: userId ?? 'test-user',
-  gym_id: gymId ?? 'test-gym',
+  userId: userId ?? 'test-user',
+  gymId: gymId ?? 'test-gym',
   createdAt: date ?? new Date(),
 })
 
@@ -57,8 +57,8 @@ export const getFakeCheckIns = ({
   Array.from({ length }, (_, i) => ({
     id: `checkin-${++i}`,
     validatedAt: null,
-    user_id: userId ?? randomUUID(),
-    gym_id: gymId ?? randomUUID(),
+    userId: userId ?? randomUUID(),
+    gymId: gymId ?? randomUUID(),
     createdAt: new Date('2024-06-01'),
   }))
 

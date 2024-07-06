@@ -7,4 +7,4 @@ const envSchema = z.object({
   DEFAULT_PER_PAGE: z.coerce.number().default(20),
 })
 
-export const env = envSchema.parse(process.env)
+export const appEnv = envSchema.parse(process.env)
