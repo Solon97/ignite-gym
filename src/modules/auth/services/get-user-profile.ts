@@ -1,12 +1,12 @@
-import { User, UserRepository } from '../repositories/interface'
-import { UserNotFoundError } from '../errors/not-found'
+import { UserNotFoundError } from '@users/errors/not-found'
+import { PublicUserData, UserRepository } from '@users/repositories/interface'
 
 interface GetUserProfileServiceInput {
   userId: string
 }
 
 interface GetUserProfileServiceOutput {
-  user: User
+  user: PublicUserData
 }
 
 export class GetUserProfileService {

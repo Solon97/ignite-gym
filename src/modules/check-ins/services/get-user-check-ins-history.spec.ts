@@ -27,15 +27,15 @@ describe('Get User Check-ins History Service', () => {
     expect(checkIns.checkIns).toEqual([
       expect.objectContaining({
         id: 'checkin-1',
-        user_id: fakeUserId,
+        userId: fakeUserId,
       }),
       expect.objectContaining({
         id: 'checkin-2',
-        user_id: fakeUserId,
+        userId: fakeUserId,
       }),
       expect.objectContaining({
         id: 'checkin-3',
-        user_id: fakeUserId,
+        userId: fakeUserId,
       }),
     ])
   })
@@ -62,11 +62,11 @@ describe('Get User Check-ins History Service', () => {
     expect(checkIns.checkIns).toEqual([
       expect.objectContaining({
         id: `checkin-${checkInsLength - 1}`,
-        user_id: fakeUserId,
+        userId: fakeUserId,
       }),
       expect.objectContaining({
         id: `checkin-${checkInsLength}`,
-        user_id: fakeUserId,
+        userId: fakeUserId,
       }),
     ])
   })

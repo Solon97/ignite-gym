@@ -1,0 +1,7 @@
+POST http://localhost:3333/auth
+content-type: application/json
+
+{
+  "email": "solonb23@gmail.com",
+  "password": "123456"
+}

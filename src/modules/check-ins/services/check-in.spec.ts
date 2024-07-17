@@ -40,8 +40,8 @@ describe('Check-in Service', () => {
     })
 
     expect(checkIn.id).toBeTruthy()
-    expect(checkIn.gym_id).toBe(validGymId)
-    expect(checkIn.user_id).toBe(validUserId)
+    expect(checkIn.gymId).toBe(validGymId)
+    expect(checkIn.userId).toBe(validUserId)
   })
 
   it('should not be able to check in with invalid gym', async () => {

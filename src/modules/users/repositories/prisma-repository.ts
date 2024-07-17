@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { prisma } from '@/lib/prisma'
 import { User } from '@prisma/client'
-import { CreateUserInput, UserRepository } from './interface'
+import { CreateUserInput, PublicUserData, UserRepository } from './interface'
 
 export class PrismaUsersRepository implements UserRepository {
-  async findById(id: string): Promise<User | null> {
+  async findById(id: string) {
     const user = await prisma.user.findUnique({
       where: {
         id,
@@ -15,17 +15,17 @@ export class PrismaUsersRepository implements UserRepository {
       return null
     }
 
-    return user
+    return this.getPublicUserData(user)
   }
 
-  async create(data: CreateUserInput): Promise<User> {
+  async create(data: CreateUserInput) {
     const user = await prisma.user.create({
       data,
     })
-    return user
+    return this.getPublicUserData(user)
   }
 
-  async findByEmail(email: string): Promise<User | null> {
+  async findByEmail(email: string) {
     const user = await prisma.user.findUnique({
       where: {
         email,
@@ -36,6 +36,15 @@ export class PrismaUsersRepository implements UserRepository {
       return null
     }
 
-    return user
+    return this.getPublicUserData(user)
+  }
+
+  private getPublicUserData(user: User): PublicUserData {
+    return {
+      id: user.id,
+      name: user.name,
+      email: user.email,
+      createdAt: user.createdAt,
+    }
   }
 }

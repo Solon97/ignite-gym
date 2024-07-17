@@ -1,16 +1,16 @@
+import { UserAlreadyExistsError } from '@users/errors/already-exists'
+import { makeCreateUserService } from '@users/services/factories/make-create-service'
 import { FastifyReply, FastifyRequest } from 'fastify'
 import { z } from 'zod'
-import { UserAlreadyExistsError } from '../errors/already-exists'
-import { makeCreateService } from '../services/factories/make-create-service'
 
-export async function create(request: FastifyRequest, reply: FastifyReply) {
+export async function createUser(request: FastifyRequest, reply: FastifyReply) {
   const createBodySchema = z.object({
     name: z.string(),
     email: z.string().email(),
     password: z.string().min(6),
   })
   const bodyData = createBodySchema.parse(request.body)
-  const createService = makeCreateService()
+  const createService = makeCreateUserService()
   createService
     .execute(bodyData)
     .then(() => {

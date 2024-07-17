@@ -34,7 +34,7 @@ describe('Validate Check-in Service', () => {
     })
 
     expect(checkIn.id).toBe(validCheckInId)
-    expect(checkIn.user_id).toBe(validUserId)
+    expect(checkIn.userId).toBe(validUserId)
     expect(checkIn.validatedAt).toBeTruthy()
   })
 
@@ -71,7 +71,7 @@ describe('Validate Check-in Service', () => {
     vi.setSystemTime(datePlusFiveMinutes)
 
     expect(checkIn.id).toBe(validCheckInId)
-    expect(checkIn.user_id).toBe(validUserId)
+    expect(checkIn.userId).toBe(validUserId)
     expect(checkIn.validatedAt).toBeTruthy()
   })
 
