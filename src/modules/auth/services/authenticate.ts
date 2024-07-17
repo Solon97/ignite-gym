@@ -1,7 +1,7 @@
-import { compare } from 'bcryptjs'
-import { UserRepository } from '@users/repositories/interface'
-import { InvalidCredentialsError } from './errors/invalid-credentials'
 import { User } from '@prisma/client'
+import { UserRepository } from '@users/repositories/interface'
+import { compare } from 'bcryptjs'
+import { InvalidCredentialsError } from './errors/invalid-credentials'
 
 interface AuthenticateServiceInput {
   email: string
@@ -13,7 +13,7 @@ interface AuthenticateServiceOutput {
 }
 
 export class AuthenticateService {
-  constructor(private usersRepository: UserRepository) {}
+  constructor(private usersRepository: UserRepository) { }
 
   async execute({
     email,
