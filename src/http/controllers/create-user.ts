@@ -11,7 +11,7 @@ export async function createUser(request: FastifyRequest, reply: FastifyReply) {
   })
   const bodyData = createBodySchema.parse(request.body)
   const createService = makeCreateUserService()
-  createService
+  await createService
     .execute(bodyData)
     .then(() => {
       return reply.status(201).send()
