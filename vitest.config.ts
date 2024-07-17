@@ -5,5 +5,6 @@ export default defineConfig({
   plugins: [tsconfigPaths()],
   test: {
     setupFiles: ['dotenv/config'],
+    environmentMatchGlobs: [['src/http/*/*.spec.ts', 'prisma']],
   },
 })
