@@ -1,8 +1,8 @@
-import { beforeEach, describe, expect, it } from 'vitest'
 import { hashWithSalt } from '@users/common/hash'
 import { InMemoryUsersRepository } from '@users/repositories/in-memory-repository'
+import { beforeEach, describe, expect, it } from 'vitest'
+import { InvalidCredentialsError } from '../errors/invalid-credentials'
 import { AuthenticateService } from './authenticate'
-import { InvalidCredentialsError } from './errors/invalid-credentials'
 
 let usersRepository: InMemoryUsersRepository
 let sut: AuthenticateService

@@ -1,8 +1,8 @@
 import fastifyJwt from '@fastify/jwt'
+import { authRoutes, userRoutes } from '@users/controllers/routes'
 import fastify from 'fastify'
 import { ZodError } from 'zod'
 import { appEnv } from './env'
-import { authRoutes, userRoutes } from './http/routes'
 
 export const app = fastify()
 

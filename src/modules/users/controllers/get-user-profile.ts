@@ -1,6 +1,6 @@
-import { FastifyReply, FastifyRequest } from 'fastify'
-import { makeGetUserProfileService } from '@auth/services/factories/make-get-user-profile-service'
 import { UserNotFoundError } from '@users/errors/not-found'
+import { makeGetUserProfileService } from '@users/services/factories/make-get-user-profile-service'
+import { FastifyReply, FastifyRequest } from 'fastify'
 
 export async function profile(request: FastifyRequest, reply: FastifyReply) {
   await request.jwtVerify()

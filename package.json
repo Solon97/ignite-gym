@@ -7,9 +7,10 @@
     "start": "node build/server.js",
     "dev": "tsx watch src/server.ts",
     "build": "tsup src --out-dir build",
-    "test": "vitest run --dir src/modules",
-    "test:e2e": "vitest run --dir src/http",
-    "test:watch": "vitest --dir src/modules",
+    "test:full": "vitest run",
+    "test": "vitest run --dir src/modules --exclude **/controllers/**",
+    "test:e2e": "vitest run --dir src/modules/*/controllers",
+    "test:watch": "vitest --dir src/modules --exclude **/controllers/**",
     "pretest:e2e": "npm link ./prisma/vitest-environment-prisma && npm link vitest-environment-prisma",
     "test:coverage": "vitest run --coverage",
     "test:ui": "vitest --ui"
