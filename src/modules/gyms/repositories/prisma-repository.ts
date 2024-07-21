@@ -1,8 +1,8 @@
 import { appEnv } from '@/env'
 import { prisma } from '@/lib/prisma'
+import { getDegreesDeltaByDistanceMeters } from '@/utils/get-distance-between-coordinates'
 import { Gym } from '@prisma/client'
 import { CreateGymInput, FindManyNearbyInput, GymRepository } from './interface'
-import { getDegreesDeltaByDistanceMeters } from '@/utils/get-distance-between-coordinates'
 
 export class PrismaGymsRepository implements GymRepository {
   async findById(id: string): Promise<Gym | null> {
@@ -14,9 +14,11 @@ export class PrismaGymsRepository implements GymRepository {
   }
 
   async findMany(query: string, page: number): Promise<Gym[]> {
+    console.log(appEnv.DEFAULT_PER_PAGE)
+    console.log(query)
     return prisma.gym.findMany({
       where: {
-        description: {
+        name: {
           startsWith: query,
         },
       },

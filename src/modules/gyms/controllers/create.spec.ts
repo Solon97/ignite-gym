@@ -1,7 +1,9 @@
 import { app } from '@/app'
+import { createAndAuthUser } from '@/test/create-and-auth-user'
 import request from 'supertest'
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
-describe('Create User (e2e)', () => {
+
+describe('Create Gym (e2e)', () => {
   beforeAll(async () => {
     await app.ready()
   })
@@ -11,18 +13,7 @@ describe('Create User (e2e)', () => {
   })
 
   it('Should be able to create a new gym', async () => {
-    await request(app.server).post('/users').send({
-      name: 'John Doe',
-      email: 'john@test.com',
-      password: '123456',
-    })
-
-    const authResponse = await request(app.server).post('/auth').send({
-      email: 'john@test.com',
-      password: '123456',
-    })
-
-    const { token } = authResponse.body
+    const { token } = await createAndAuthUser(app)
 
     const response = await request(app.server)
       .post('/gyms')

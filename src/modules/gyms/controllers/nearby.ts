@@ -11,8 +11,8 @@ export async function getNearbyGyms(
 ) {
   const nearbyGymsQuerySchema = z.object({
     page: z.coerce.number().min(1).default(1),
-    latitude: z.number().refine((value) => Math.abs(value) <= 90),
-    longitude: z.number().refine((value) => Math.abs(value) <= 180),
+    latitude: z.coerce.number().refine((value) => Math.abs(value) <= 90),
+    longitude: z.coerce.number().refine((value) => Math.abs(value) <= 180),
   })
 
   const { latitude, longitude, page } = nearbyGymsQuerySchema.parse(

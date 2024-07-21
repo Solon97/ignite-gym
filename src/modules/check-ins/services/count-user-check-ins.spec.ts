@@ -1,10 +1,10 @@
 import { getFakeUser } from '@/test/mocks/fake-entities'
 import { CheckInRepository } from '@check-ins/repositories/interface'
+import { User } from '@prisma/client'
 import { UserNotFoundError } from '@users/errors/not-found'
 import { UserRepository } from '@users/repositories/interface'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { CountUserCheckInsService } from './count-user-check-ins'
-import { User } from '@prisma/client'
 
 const fakeUserId = 'user-01'
 const totalCheckIns = 5
@@ -20,7 +20,7 @@ describe('Count User Check-in Service', () => {
       userId: fakeUserId,
     })
 
-    expect(checkIns.checkIns).toBe(totalCheckIns)
+    expect(checkIns.checkInsCount).toBe(totalCheckIns)
   })
 
   it('should not be able to count check ins for invalid user', async () => {

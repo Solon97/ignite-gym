@@ -7,14 +7,14 @@ interface CountUserCheckInsServiceInput {
 }
 
 interface CountUserCheckInsServiceOutput {
-  checkIns: number
+  checkInsCount: number
 }
 
 export class CountUserCheckInsService {
   constructor(
     private checkInsRepository: CheckInRepository,
     private usersRepository: UserRepository,
-  ) {}
+  ) { }
 
   async execute({
     userId,
@@ -24,10 +24,11 @@ export class CountUserCheckInsService {
       throw new UserNotFoundError()
     }
 
-    const checkIns = await this.checkInsRepository.countCheckInsByUserId(userId)
+    const checkInsCount =
+      await this.checkInsRepository.countCheckInsByUserId(userId)
 
     return {
-      checkIns,
+      checkInsCount,
     }
   }
 }
