@@ -16,6 +16,7 @@ describe('Search Gyms Service', () => {
       userLatitude: 0,
       userLongitude: 0,
       page: 1,
+      distanceInMeters: 100,
     })
 
     expect(gyms.gyms).toHaveLength(3)
