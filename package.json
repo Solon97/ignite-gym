@@ -9,7 +9,7 @@
     "build": "tsup src --out-dir build",
     "test:full": "vitest run",
     "test": "vitest run --dir src/modules --exclude **/controllers/**",
-    "test:e2e": "vitest run --dir src/modules/*/controllers",
+    "test:e2e": "vitest run src/modules/**/controllers/*.spec.ts",
     "test:watch": "vitest --dir src/modules --exclude **/controllers/**",
     "pretest:e2e": "npm link ./prisma/vitest-environment-prisma && npm link vitest-environment-prisma",
     "test:coverage": "vitest run --coverage",

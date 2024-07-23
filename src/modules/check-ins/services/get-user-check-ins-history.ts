@@ -15,7 +15,7 @@ export class GetUserCheckInsHistoryService {
   constructor(
     private checkInsRepository: CheckInRepository,
     private usersRepository: UserRepository,
-  ) {}
+  ) { }
 
   async execute({
     userId,

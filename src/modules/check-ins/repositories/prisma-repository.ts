@@ -1,12 +1,12 @@
+import { appEnv } from '@/env'
 import { prisma } from '@/lib/prisma'
 import { CheckIn } from '@prisma/client'
+import dayjs from 'dayjs'
 import {
   CheckInRepository,
   CreateCheckInInput,
   FindByUserInDateInput,
 } from './interface'
-import dayjs from 'dayjs'
-import { appEnv } from '@/env'
 
 export class PrismaCheckInsRepository implements CheckInRepository {
   async create(data: CreateCheckInInput) {
@@ -15,11 +15,16 @@ export class PrismaCheckInsRepository implements CheckInRepository {
     })
   }
 
-  save(input: CheckIn) {
+  save({ id, gymId, userId, validatedAt }: CheckIn) {
     return prisma.checkIn.update({
-      data: input,
+      data: {
+        id,
+        gymId,
+        validatedAt,
+        userId,
+      },
       where: {
-        id: input.id,
+        id,
       },
     })
   }
@@ -62,7 +67,7 @@ export class PrismaCheckInsRepository implements CheckInRepository {
       where: {
         userId,
       },
-      skip: page * appEnv.DEFAULT_PER_PAGE,
+      skip: (page - 1) * appEnv.DEFAULT_PER_PAGE,
       take: appEnv.DEFAULT_PER_PAGE,
     })
   }
