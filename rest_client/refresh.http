@@ -1,0 +1,8 @@
+PATCH http://localhost:3333/token/refresh
+content-type: application/json
+set-cookie: refreshToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2MTE1ODY3NC1lZjY0LTQ2NjAtOWI4Mi1lNzI0ZThlOTVkY2MiLCJpYXQiOjE3MjE3MDAwNDQsImV4cCI6MTcyMjMwNDg0NH0.e13Bhln6WzB57g9XmmOXIQRoq7AWWmJ5I19XB63TYc0; Path=/; HttpOnly; Secure; SameSite=Strict
+
+{
+  "email": "john@test.com",
+  "password": "123456"
+}
