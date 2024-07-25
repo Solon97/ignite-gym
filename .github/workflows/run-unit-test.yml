@@ -21,3 +21,6 @@ jobs:
       
       - name: Run Unit Tests
         run: npm run test
+
+    env:
+      DEFAULT_PER_PAGE: 20
