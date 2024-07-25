@@ -19,7 +19,7 @@
 - [x] O usuário não pode fazer check-in se não estiver perto (100m) da academia
 - [x] O check-in só pode ser validado até 20 minutos após criado
 - [ ] O check-in só pode ser validado por adms
-- [ ] A academia só pode ser cadastrada por adms
+- [x] A academia só pode ser cadastrada por adms
 
 ## Requisitos Não Funcionais
 
