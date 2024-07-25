@@ -23,4 +23,5 @@ jobs:
         run: npm run test
 
     env:
-      DEFAULT_PER_PAGE: 20
+      DATABASE_URL: ''
+      JWT_SECRET: ''
