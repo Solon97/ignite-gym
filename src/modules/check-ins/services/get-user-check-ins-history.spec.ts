@@ -4,7 +4,7 @@ import { CheckInRepository } from '@check-ins/repositories/interface'
 import { CheckIn, User } from '@prisma/client'
 import { UserNotFoundError } from '@users/errors/not-found'
 import { UserRepository } from '@users/repositories/interface'
-import { randomUUID } from 'crypto'
+import { randomUUID } from 'node:crypto'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { GetUserCheckInsHistoryService } from './get-user-check-ins-history'
 

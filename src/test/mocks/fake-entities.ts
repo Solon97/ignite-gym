@@ -1,5 +1,5 @@
 import { CheckIn, Gym, Prisma, User } from '@prisma/client'
-import { randomUUID } from 'crypto'
+import { randomUUID } from 'node:crypto'
 
 export const getFakeUser = (id?: string): User => ({
   id: id ?? 'test-user',
@@ -7,6 +7,7 @@ export const getFakeUser = (id?: string): User => ({
   email: '',
   passwordHash: '',
   createdAt: new Date('2024-06-01'),
+  role: 'MEMBER',
 })
 
 export const getFakeGym = ({
